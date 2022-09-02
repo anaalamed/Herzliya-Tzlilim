@@ -11,20 +11,15 @@ import Whatsapp from "./components/Whatsapp.view";
 import { COLORS } from "../styles/colors";
 import { devices } from "../styles/responsive";
 import { Title } from "../styles/reset.css";
-
-
-
-// import { } from "../../public/bg.jpg"
-
-
+import Loader from './components/Loader';
 
 
 const Home = () => {
   const dispatch = useDispatch();
   const { is_loading, data, error_msg } = useSelector((state) => state.data);
-  console.log(data);
-  // const [heroUrl, setHeroUrl] = useState("");
-  // const [sliderPhotos, setsliderPhotos] = useState([]);
+  const [mainOpacity, setMainOpacity] = useState(false);
+
+  // console.log(data);
 
 
   useEffect(() => {
@@ -32,7 +27,7 @@ const Home = () => {
   }, [])
 
   return (
-    <Main>
+    <Main opacity={mainOpacity}>
       {Object.keys(data).length !== 0 ? (
         <>
           <Hero heroUrl={data?.records.find(record => record.fields.name == "video").fields.attachments[0].url} />
@@ -43,11 +38,10 @@ const Home = () => {
         </>
 
       ) : (
-          // <img src="../../public/bg.jpg" />
-          null
+          <Loader showLoader={is_loading} />
         )}
       <Whatsapp></Whatsapp>
-      <ContactMail />
+      <ContactMail setMainOpacity={setMainOpacity} />
     </Main>
   );
 };
@@ -61,6 +55,7 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   background: ${COLORS.secondary};
+  opacity: ${props => props.opacity ? "0.7" : "1"};
 `;
 
 

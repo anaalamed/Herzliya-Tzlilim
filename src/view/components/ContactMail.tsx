@@ -7,37 +7,47 @@ import { send } from 'emailjs-com';
 import { COLORS } from "../../styles/colors";
 import { devices } from "../../styles/responsive";
 import Popup from './Popup'
-// import Popup from "./Popup";
+import { Rings } from 'react-loader-spinner';
+import Loader from './Loader';
 
 
-
-
-const ContactMail = () => {
+const ContactMail = ({ setMainOpacity }) => {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const phoneRegex = /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/;
-    const { control, handleSubmit, formState: { errors } } = useForm();
+    const { control, handleSubmit, formState: { errors }, reset } = useForm();
 
     const [showPopup, setShowPopup] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
     const [message, setMessage] = useState("");
 
 
+
     const onSubmit = (data) => {
-        send("service_zhbqytu", "template_2usj6nv", data, "user_AlLx4a66ZxnxU3ovAhhnU")
+        setShowLoader(true);
+        setMainOpacity(true);
+        send("service_zhbqytu", "template_2usj6nv", data, "user_AlLx4a66ZxnxU3ovAhhnU") // ana test
+            // send("service_j3atd0p", "template_mw0lgqo", data, "sdhYK49IUFCtGb3A2") // the real one 
             .then((response) => {
                 console.log('SUCCESS!', response.status, response.text);
                 setMessage("נרשמת בהצלחה");
+                setShowLoader(false);
                 setShowPopup(true);
+                reset();
             })
             .catch((err) => {
                 console.log('FAILED...', err);
+                setMessage("משהו השתבש... תנסה שוב");
+                setShowLoader(false);
+                setShowPopup(true);
             });
     }
+
     return (
         <div>
 
             <Box id="contact">
 
-                <Title1>השאר פרטיך כעת ונציג יחזור אליך טלפונית!</Title1>
+                <Title1>השאר פרטים כעת ונציג יחזור אליך טלפונית!</Title1>
 
                 <Form >
                     <Field>
@@ -60,7 +70,7 @@ const ContactMail = () => {
                                 </InputContainer>
                             )}
                         />
-                        {errors.name && <StyledText>This is not valid</StyledText>}
+                        {errors.name && <StyledText>לא תקין</StyledText>}
                     </Field>
 
                     <Field>
@@ -84,7 +94,7 @@ const ContactMail = () => {
                                 </InputContainer>
                             )}
                         />
-                        {errors.email && <StyledText>This is not valid</StyledText>}
+                        {errors.email && <StyledText>לא תקין</StyledText>}
                     </Field>
 
                     <Field>
@@ -108,15 +118,17 @@ const ContactMail = () => {
                                 </InputContainer>
                             )}
                         />
-                        {errors.telephone && <StyledText>This is not valid</StyledText>}
+                        {errors.telephone && <StyledText>לא תקין</StyledText>}
                     </Field>
 
                     <Button title="Submit" onClick={handleSubmit(onSubmit)} >שלח</Button>
                 </Form>
 
+
             </Box>
 
-            <Popup display={showPopup} text={message} setShowPopup={setShowPopup}></Popup>
+            <Loader showLoader={showLoader} />
+            <Popup display={showPopup} text={message} setShowPopup={setShowPopup} setMainOpacity={setMainOpacity}></Popup>
         </div>
 
     );
@@ -136,32 +148,41 @@ const Box = styled.div`
   margin: 0 auto;
   direction: rtl;
   margin-top: 40px;
-  position: relative;
   background: #fff;
 
-::before {
-  content: "";
-  display: block;
-  background-image: url("./bg.jpg");
-  background-position: 70% 70%;
-  background-attachment: fixed;
+  background: url("./bg.jpg") center no-repeat;
   background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
--o-background-size: cover;
-  opacity: 0.7;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
+  /* background-attachment: fixed; */
+
+  /* position: relative;
+    ::before {
+    content: "";
+    display: block;
+    background-image: url("./bg.jpg");
+    background-position: 70% 70%;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    opacity: 0.7;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    } */
  
 `;
 
 const Field = styled.div`
     display: flex;
     flex-direction: column;
+    height: 100px;
+
+    @media ${devices.mobile} {
+    height: auto;
+  }
 `;
 
 const Title1 = styled.h3`
@@ -234,10 +255,8 @@ export const Button = styled.button`
   padding: 15px;
   border-radius: 10px;
 
-  margin-top: 10px;
   border: 1px solid ${COLORS.main};
-  margin: 20px;
-  /* color: ${COLORS.main}; */
+  margin: 0 10px;
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
@@ -245,8 +264,13 @@ export const Button = styled.button`
   border-bottom-right-radius: 50px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 10px;
-  /* box-shadow: 10px 5px 5px grey; */
   width: 20rem;
+
+  align-self: flex-start;
+  margin-top: 11px;
+  @media ${devices.mobile} {
+      align-self: unset;
+  }
 
   :hover {
       background: ${COLORS.main};
@@ -297,4 +321,6 @@ export const StyledText = styled.p`
     color: red;
     text-align: center;
     padding-bottom: 10px;
+    height: 26px;
+    display: block;
 `;

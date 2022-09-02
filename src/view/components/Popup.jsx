@@ -8,28 +8,31 @@ import { devices } from "../../styles/responsive";
 
 
 
-const Popup = ({ display, text, setShowPopup }) => {
-    console.log(display)
+const Popup = ({ display, text, setShowPopup, setMainOpacity }) => {
+  console.log(display)
 
-    return (
-        <Backdrop display={display} onClick={() => setShowPopup(false)}>
+  return (
+    <Backdrop display={display} onClick={() => setShowPopup(false)}>
 
-            <Box display={display}>
-                <Text>{text}</Text>
-                <Button display={display} onClick={() => setShowPopup(false)}>Ok</Button>
+      <Box display={display}>
+        <Text>{text}</Text>
+        <Button display={display} onClick={() => {
+          setShowPopup(false);
+          setMainOpacity(false);
+        }}>Ok</Button>
 
-            </Box>
-        </Backdrop>
+      </Box>
+    </Backdrop>
 
-    );
+  );
 };
 export default Popup;
 
 
 const Backdrop = styled.div`
   display: ${props => props.display ? "block" : "none"};
-background: rgba(255,255,255,0.5);
-position: fixed;
+  background: rgba(255,255,255,0.5);
+  position: fixed;
   bottom: 0;
   top: 0;
   left: 0;
@@ -53,6 +56,8 @@ const Box = styled.div`
   border-bottom-right-radius: 50px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 10px;
+  -webkit-box-shadow: 5px 5px 15px 5px #000000; 
+  box-shadow: 5px 5px 15px 5px #000000;
 `;
 
 

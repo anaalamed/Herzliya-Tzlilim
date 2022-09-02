@@ -19,6 +19,7 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+    background: ${COLORS.secondary};
   }
 
   * {
