@@ -1,0 +1,16 @@
+{
+    "name": "Herzliya Tzlilim Yacht",
+    "short_name": "Herzliya Tzlilim",
+    "icons": [
+      {
+        "src": "logo.jpeg",
+        "type": "image/png",
+        "sizes": "500x500"
+      }
+    ],
+    "start_url": "https://herzliya-tzlilim.web.app",
+    "description": "יאכטה בהרצליה - צלילים מרפאים ",
+    "display": "standalone",
+    "theme_color": "#294AC4",
+    "background_color": "#294AC4"
+  }
