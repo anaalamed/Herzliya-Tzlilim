@@ -6,6 +6,11 @@
         "src": "logo.jpeg",
         "type": "image/png",
         "sizes": "500x500"
+      },
+      {
+        "src": "logo200.jpeg",
+        "type": "image/png",
+        "sizes": "200x200"
       }
     ],
     "start_url": "https://herzliya-tzlilim.web.app",

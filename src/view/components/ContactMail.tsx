@@ -25,8 +25,8 @@ const ContactMail = ({ setMainOpacity }) => {
     const onSubmit = (data) => {
         setShowLoader(true);
         setMainOpacity(true);
-        send("service_zhbqytu", "template_2usj6nv", data, "user_AlLx4a66ZxnxU3ovAhhnU") // ana test
-            // send("service_j3atd0p", "template_mw0lgqo", data, "sdhYK49IUFCtGb3A2") // the real one 
+        // send("service_zhbqytu", "template_2usj6nv", data, "user_AlLx4a66ZxnxU3ovAhhnU") // ana test
+            send("service_j3atd0p", "template_mw0lgqo", data, "sdhYK49IUFCtGb3A2") // the real one 
             .then((response) => {
                 console.log('SUCCESS!', response.status, response.text);
                 setMessage("נרשמת בהצלחה");

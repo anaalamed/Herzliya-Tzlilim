@@ -19,7 +19,7 @@ const Popup = ({ display, text, setShowPopup, setMainOpacity }) => {
         <Button display={display} onClick={() => {
           setShowPopup(false);
           setMainOpacity(false);
-        }}>Ok</Button>
+        }}>תודה</Button>
 
       </Box>
     </Backdrop>
@@ -58,6 +58,7 @@ const Box = styled.div`
   border-bottom-left-radius: 10px;
   -webkit-box-shadow: 5px 5px 15px 5px #000000; 
   box-shadow: 5px 5px 15px 5px #000000;
+  z-index: 9999999;
 `;
 
 

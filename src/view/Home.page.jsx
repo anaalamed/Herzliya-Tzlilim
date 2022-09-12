@@ -27,7 +27,7 @@ const Home = () => {
   }, [])
 
   return (
-    <Main opacity={mainOpacity}>
+    <Main className="homepage" opacity={mainOpacity}>
       {Object.keys(data).length !== 0 ? (
         <>
           <Hero heroUrl={data?.records.find(record => record.fields.name == "video").fields.attachments[0].url} />
@@ -55,7 +55,7 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   background: ${COLORS.secondary};
-  opacity: ${props => props.opacity ? "0.7" : "1"};
+  /* opacity: ${props => props.opacity ? "0.7" : "1"}; */
 `;
 
 
